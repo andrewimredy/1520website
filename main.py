@@ -1,7 +1,10 @@
-from flask import Flask
+from flask import Flask, render_template
 app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    return 'Hello, World!'
-    
+    return render_template("index.html")
+
+@app.route('/Profile')
+def profile_view():
+    return render_template("profile.html")
