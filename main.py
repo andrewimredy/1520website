@@ -3,7 +3,11 @@ app = Flask(__name__)
 
 @app.route('/')
 def homepage():
-    return render_template("index.html")
+    return render_template("index.html", username="Account name goes here")
+
+#@app.route('/')
+#def homepage():
+#    return render_template("index.html")
 
 @app.route('/Profile')
 def profile_view():

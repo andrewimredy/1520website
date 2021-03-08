@@ -41,3 +41,7 @@ body {
     padding: 25px;
     border-radius: 15px;
 }
+.account_name{
+    margin: 0;
+    padding-right: 30px;
+}
