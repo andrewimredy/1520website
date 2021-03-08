@@ -13,13 +13,13 @@ body {
 }
 
 .navbar {
-    max-width: 640px;
-    margin: 50px auto;
-    padding: 0 20px;
+    margin: 1% 1%;
+    padding: 20px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     font-size: 24px;
+    background-color: black;
 }
 
 .navbar__navigation{
@@ -37,4 +37,7 @@ body {
 .navbar__link{
     text-decoration: none;
     color: white;
+    background-color: grey;
+    padding: 25px;
+    border-radius: 15px;
 }
