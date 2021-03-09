@@ -1,11 +1,21 @@
-{% extends "_baseLoggedIn.html" %}
+{% extends "_base.html" %}
 {% block title %}PittBet Home{% endblock %}
 
   <body>
       {% block content %}
     <h1>PittBett</h1>
-    <p>
-        Main content for the Homepage
-    </p>
+    <ul class="games">
+        <li class="game_block">
+            <div class="team_and_button">
+                <p class="game_block_team"> Team 1</p>
+                <button class="game_block_button">Choice 1</button>
+            </div>
+            <p class="game_block_time"> 12:00 3/8/21 </p>
+            <div class="team_and_button">
+                <p class="game_block_team">Team 2</p>
+                <button class="game_block_button">Choice 2</button>
+            </div>
+        </li>
+    <ul>
     {% endblock %}
   </body>

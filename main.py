@@ -3,11 +3,12 @@ app = Flask(__name__)
 
 @app.route('/')
 def homepage():
-    return render_template("index.html", username="Account name goes here")
+    return render_template("index.html")
 
+#sending in the username will look like this
 #@app.route('/')
 #def homepage():
-#    return render_template("index.html")
+#    return render_template("index.html", user="name goes here")
 
 @app.route('/Profile')
 def profile_view():
