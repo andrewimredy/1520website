@@ -15,9 +15,9 @@
             <ul class="navbar__navigation">
                 {% if user %}
                     <p class="account_name">{{user}}</p>
+                    <li class="nav_item"><a class="navbar__link" href="/auth/logout">Logout</a></li>
                 {% else %}
-                    <li class="nav_item"><a class="navbar__link" href="/">Login</a></li>
-                    <li class="nav_item"><a class="navbar__link" href="/">New Account</a></li>
+                    <li class="nav_item"><a class="navbar__link" href="/auth/login">Login</a></li>
                 {% endif %}
             </ul>
         </nav>

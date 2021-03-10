@@ -1,0 +1,42 @@
+{% extends "_base.html" %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="centered">
+    <form action="/auth/signup" method="POST" enctype="multipart/form-data">
+    <p>
+      <label>Username</label>
+      <input type="text" name="username">
+    </p>
+    <p>
+      <label>Password</label>
+      <input type="password" name="password">
+    </p>
+    <p>
+      <label>Confirm Password</label>
+      <input type="password" name="confirm-password">
+    </p>
+
+    <button type="submit">Sign Up</button>
+  </form>
+</div>
+
+<script>
+    var username = document.getElementById("username");
+    var password = document.getElementById("password");
+    var confirm_password = document.getElementById("confirm-password");
+
+    function validPass(){
+        if(password.value != confirm_password.value){
+            console.log(password.value);
+            console.log(confirm_password.value);
+            console.log(password.value != confirm_password.value);
+            confirm_password.setCustomValidity("Passwords Don't Match");
+            confirm_password.reportValidity();
+        }else if(password.value.trim() == ""){
+            password.setCustomValidity("Passwords must not be empty");
+            password.reportValidity();
+        }
+    }
+</script>
+{% endblock %}
