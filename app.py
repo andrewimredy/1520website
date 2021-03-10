@@ -39,3 +39,15 @@ def main_page():
     team3A = newlist[4],
     team3B = newlist[5]
     )
+
+@app.route('/Profile')
+def profile_view():
+    return render_template("profile.html")
+
+@app.route('/myStats')
+def stats_view():
+    return render_template("myStats.html")
+
+@app.route('/groups')
+def groups_view():
+    return render_template("groups.html")
