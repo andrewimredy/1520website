@@ -16,6 +16,10 @@ for game in range(numgames):
     teamlist.append(json2['games'][game]['vTeam']['triCode'])
     teamlist.append(json2['games'][game]['hTeam']['triCode'])
 
+timelist = [] #list of game times
+for game in range(numgames):
+    timelist.append(json2['games'][game]['startTimeEastern'])
+
 #Convenience method to turn abbreviation into full team name. declare this before using it
 teams = (requests.get('http://data.nba.net/10s/prod/v2/2020/teams.json')).json()
 def get_full_name(tricode):
