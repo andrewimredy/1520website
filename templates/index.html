@@ -4,14 +4,29 @@
   <body>
       {% block content %}
     <h1>PittBett</h1>
-    <div class="gameBox">
-        <h2> {{ team1A }} versus {{ team1B }}</h2>
-        <button type="button">BET A</button>
-        <button type="button">BET B</button>
-    </div>
-    <div class="gameBox">
-        <h2> {{ team2A }} versus {{ team2B }}</h2>
-    </div>
-    
+    <ul class="games">
+        <li class="game_block">
+            <div class="team_and_button">
+                <p class="game_block_team"> {{team1A}}</p>
+                <button class="game_block_button">Choice 1</button>
+            </div>
+            <p class="game_block_time"> 12:00 3/8/21 </p>
+            <div class="team_and_button">
+                <p class="game_block_team">{{team1B}}</p>
+                <button class="game_block_button">Choice 2</button>
+            </div>
+        </li>
+        <li class="game_block">
+            <div class="team_and_button">
+                <p class="game_block_team"> {{team2A}}</p>
+                <button class="game_block_button">Choice 1</button>
+            </div>
+            <p class="game_block_time"> 12:00 3/8/21 </p>
+            <div class="team_and_button">
+                <p class="game_block_team">{{Team 2B}}</p>
+                <button class="game_block_button">Choice 2</button>
+            </div>
+        </li>
+    <ul>
     {% endblock %}
   </body>

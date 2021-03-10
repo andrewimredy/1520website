@@ -41,10 +41,61 @@ body {
     padding: 25px;
     border-radius: 15px;
 }
+.account_name{
+    margin: 0;
+    padding-right: 30px;
+}
 
-.gameBox{
+.games{
+    margin: 1% 1%;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 24px;
+    list-style: none;
+}
+
+.game_block{
+    width: 90%;
     margin: auto;
-    border: 4px solid rgb(11, 11, 143);
-    margin: 10px;
-    padding:10px;
+    background-color: gray;
+    display: inherit;
+    padding: 50px 20% 70px 20%;
+}
+
+.game_block_team {
+    font-size: 24px;
+    margin: 2;
+    color: greenyellow;
+    padding: 20px;
+    width: 200px;
+}
+
+.game_block_time {
+    margin: 20px;
+}
+
+.team_and_button{
+   display: inline-block;
+    vertical-align: middle;
+    margin-left: 15px;
+    margin-right: 15px;
+    padding: 40px;
+    width: 200px;
+    height: 200px;
+}
+
+.game_block_button{
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    height: 50px;
+    border-radius: 10px;
+    background-color: white;
+    margin: auto;
+}
+.game_block_button:hover{
+    cursor: pointer;
+    background-color: #f8f8f8b0
 }
