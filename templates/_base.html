@@ -13,8 +13,12 @@
                 <li class="nav_item"><a class="navbar__link" href="/groups">Groups</a></li>
             </ul>
             <ul class="navbar__navigation">
-                <li class="nav_item"><a class="navbar__link" href="/">Login</a></li>
-                <li class="nav_item"><a class="navbar__link" href="/">New Account</a></li>
+                {% if user %}
+                    <p class="account_name">{{user}}</p>
+                {% else %}
+                    <li class="nav_item"><a class="navbar__link" href="/">Login</a></li>
+                    <li class="nav_item"><a class="navbar__link" href="/">New Account</a></li>
+                {% endif %}
             </ul>
         </nav>
     <!-- End of Header-->
