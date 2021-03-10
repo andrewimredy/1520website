@@ -9,7 +9,7 @@ url = (json1['links'])['currentScoreboard']
 url = 'http://data.nba.net/10s' + url
 
 #get json for today's scores .. hardcoded url for now b/c all star break
-json2 = (requests.get('http://data.nba.net/10s/prod/v1/20210302/scoreboard.json')).json()
+json2 = (requests.get(url)).json()
 numgames = json2['numGames'] #number of games being playd today
 teamlist = [] #list of teams playing today
 for game in range(numgames):
