@@ -4,8 +4,12 @@
   <body>
       {% block content %}
     <h1>PittBett</h1>
-    <p>
-        Main content for the Homepage
-    </p>
+    <div class="gameBox">
+        <h2> {{ team1A }} versus {{ team1B }}</h2>
+    </div>
+    <div class="gameBox">
+        <h2> {{ team2A }} versus {{ team2B }}</h2>
+    </div>
+    
     {% endblock %}
   </body>
