@@ -39,7 +39,9 @@ def main_page():
     team1A = newlist[0],
     team1B = newlist[1],
     team2A = newlist[2],
-    team2B = newlist[3]
+    team2B = newlist[3],
+    time1 = timelist[0],
+    time2 = timelist[1]
     )
 
 @app.route('/Profile')
