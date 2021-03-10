@@ -50,7 +50,7 @@ body {
     margin: 1% 1%;
     padding: 20px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     font-size: 24px;
     list-style: none;
@@ -58,7 +58,10 @@ body {
 
 .game_block{
     width: 90%;
-    margin: auto;
+    margin-top: 25px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 25px;
     background-color: gray;
     display: inherit;
     padding: 50px 20% 70px 20%;
