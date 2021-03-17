@@ -1,8 +1,10 @@
 from flask import Flask, render_template, session
-app = Flask(__name__)
 
 from google.cloud import datastore
 from auth import blue as auth_blueprint
+
+app = Flask(__name__)
+app.secret_key = b"20072012f35b38f51c782e21b478395891bb6be23a61d70a"
 
 app.register_blueprint(auth_blueprint, url_prefix="/auth")
 
