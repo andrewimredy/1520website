@@ -55,3 +55,9 @@ def stats_view():
 @app.route('/groups')
 def groups_view():
     return render_template("groups.html")
+
+@app.route('/create_group')
+def create_group_view():
+    return render_template("create_group.html")
+
+
