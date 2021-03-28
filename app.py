@@ -3,12 +3,15 @@ from flask import Flask, render_template, session
 from google.cloud import datastore
 from auth import blue as auth_blueprint
 
+from user import userStore, generate_creds, hash_password
+
 app = Flask(__name__)
 app.secret_key = b"20072012f35b38f51c782e21b478395891bb6be23a61d70a"
 
 app.register_blueprint(auth_blueprint, url_prefix="/auth")
 
 datastore_client = datastore.Client()
+userstore = userStore(datastore_client)
 
 ### API INTERACTION ###
 import requests, json
@@ -43,7 +46,8 @@ for i in teamlist:
 
 @app.route('/')
 def main_page():
-    return render_template('index.html', 
+    user = get_user()
+    return render_template('index.html', user=user,
     numgames=numgames,
     team1A = newlist[0],
     team1B = newlist[1],
@@ -59,7 +63,9 @@ def profile_view():
 
 @app.route('/myStats')
 def stats_view():
-    return render_template("myStats.html")
+    user = get_user()
+    points = get_points(user)
+    return render_template("myStats.html" , user=user , points=points)
 
 @app.route('/groups')
 def groups_view():
@@ -71,3 +77,8 @@ def login():
 
 def get_user():
     return session.get("user", None)
+
+def get_points(userStr):
+    user_key = userstore.ds.key("userCreds", userStr)
+    user = userstore.ds.get(user_key)
+    return user["points"]

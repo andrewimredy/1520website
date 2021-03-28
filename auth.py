@@ -22,7 +22,7 @@ def handle_login():
     user = userstore.verify_password(username, password)
     if not user:
         return render_template("login.html", auth=True, error="Password did not match.")
-    session["user"] = user.username
+    session["user"] = username
     return redirect("/")
 
 @blue.route("/logout")

@@ -4,15 +4,16 @@ import os
 
 
 class userCreds:
-    def __init__(self, username, password_hash, salt):
+    def __init__(self, username, password_hash, salt, points):
         self.username = username
         self.password_hash = password_hash
         self.salt = salt
-
+        self.points = points
+        
 def generate_creds(username, password):
     salt = hashlib.sha256(os.urandom(60)).hexdigest().encode("utf-8")
     password_hash = hash_password(password, salt)
-    return userCreds(username, password_hash, salt)
+    return userCreds(username, password_hash, salt, 0)
 
 def hash_password(password, salt):
     encoded = password.encode("utf-8")
@@ -30,7 +31,8 @@ class userStore:
         hash_attempt = hash_password(password, user["salt"])
         if hash_attempt != user["password_hash"]:
             return None
-        return userCreds(user["username"], user["password_hash"], user["salt"])
+        #return userCreds(user["username"], user["password_hash"], user["salt"])
+        return user
     
     def store_new_credentials(self, creds):
         user_key = self.ds.key("userCreds", creds.username)
@@ -38,6 +40,7 @@ class userStore:
         user["username"] = creds.username
         user["password_hash"] = creds.password_hash
         user["salt"] = creds.salt
+        user["points"] = creds.points
         self.ds.put(user)
 
     def list_existing_users(self, txn=None):
