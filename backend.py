@@ -10,6 +10,7 @@ def update_games():
     json1 = (requests.get('http://data.nba.net/10s/prod/v1/today.json')).json()
     url = (json1['links'])['currentScoreboard']
     url = 'http://data.nba.net/10s' + url
+
     #get json for today's scores
     json2 = (requests.get(url)).json()
     numgames = json2['numGames']    
@@ -26,7 +27,6 @@ def update_games():
                 winner = 'home'
             else:
                 winner = 'visitor'
-        print(kind, id, home_team, visitor_team, status, winner)
         #upload record to datastore
         entity_key =  datastore_client.key('game', game['gameId'])
         game_entity = datastore.Entity(key=entity_key)
@@ -37,3 +37,9 @@ def update_games():
         datastore_client.put(game_entity)
 
 update_games()
+
+#A function to place a bet. This should be called when a user clicks a bet button on the main page
+def place_bet(username, game, team):
+
+    #create entity
+    entity_key = datastore_client.key('bet', )
