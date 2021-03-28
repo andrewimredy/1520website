@@ -15,8 +15,6 @@ def update_games():
     json2 = (requests.get(url)).json()
     numgames = json2['numGames']    
     #loop thru games of today
-
-    #if already exists, don't create again TODO
     for game in json2['games']:
         if not game['isRecapArticleAvail']: # game not finished
             status = 'not_done'
@@ -36,10 +34,11 @@ def update_games():
         game_entity['winner'] = winner
         datastore_client.put(game_entity)
 
-update_games()
 
 #A function to place a bet. This should be called when a user clicks a bet button on the main page
 def place_bet(username, game, team):
 
     #create entity
-    entity_key = datastore_client.key('bet', )
+    entity_key = datastore_client.key('bet', username + game)
+    bet_entity = datastore.Entity(key=entity_key)
+    bet_entity['team'] = team #home or away
