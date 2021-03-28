@@ -3,21 +3,21 @@
 
 {% block content %}
 <div class="centered">
-    <form action="/auth/login" method="POST" enctype="multipart/form-data">
+    <form action="/groups/create_group" method="POST" enctype="multipart/form-data">
     <p>
       <label>Group Name</label>
-      <input type="text" name="group_name">
+      <input type="text" name="group_name" required>
     </p>
     <p>
-      <label>Password(optional)</label>
-      <input type="password" name="password">
+      <label>Group Size</label>
+      <input type="number" name="group_size" required>
     </p>
     <p>
       <label>Password(optional)</label>
       <input type="password" name="password">
     </p>
 
-    <button type="submit">Login</button>
+    <button type="submit">Create Group</button>
   </form>
 </div>
 {% endblock %}

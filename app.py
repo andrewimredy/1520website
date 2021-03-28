@@ -1,4 +1,5 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, session, redirect
+from groups import GroupInfo, create_group 
 app = Flask(__name__)
 
 ### API INTERACTION ###
@@ -56,8 +57,20 @@ def stats_view():
 def groups_view():
     return render_template("groups.html")
 
-@app.route('/create_group')
+#@app.route()
+
+@app.route('/groups/create_group', methods=["GET"])
 def create_group_view():
     return render_template("create_group.html")
+
+@app.route('/groups/create_group', methods=["POST"])
+def create_group_post():
+    group_name = request.form.get("group_name")
+    group_size = request.form.get("group_size")
+    password = request.form.get("password")
+    create_group(group_name, group_size, password, "chris")
+    return redirect("/groups")
+
+
 
 
