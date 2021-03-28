@@ -7,17 +7,14 @@
     <body>
      <!-- Beginning of Header-->   
         <nav class = "navbar">
-            <ul class="navbar__navigation">
-                <li class="nav_item"><a class="navbar__link" href="/">Home</a></li>
-                <li class="nav_item"><a class="navbar__link" href="/myStats">My Stats</a></li>
-                <li class="nav_item"><a class="navbar__link" href="/groups">Groups</a></li>
-            </ul>
-            <ul class="navbar__navigation">
+                <a class="navbar__link" href="/">Home</a>
+                <a class="navbar__link" href="/myStats">My Stats</a>
+                <a class="navbar__link" href="/groups">Groups</a>
                 {% if user %}
                     <p class="account_name">{{user}}</p>
                 {% else %}
-                    <li class="nav_item"><a class="navbar__link" href="/">Login</a></li>
-                    <li class="nav_item"><a class="navbar__link" href="/">New Account</a></li>
+                    <a class="navbar__user" href="/">Login</a>
+                    <a class="navbar__user" href="/">New Account</a>
                 {% endif %}
             </ul>
         </nav>
