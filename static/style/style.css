@@ -90,10 +90,12 @@ body {
 }
 
 .game_time {
-    margin: auto;
+    vertical-align: text-top;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.team_and_button{
+.team_and_button_A{
    display: inline-block;
     vertical-align: middle;
     margin-left: 15px;
@@ -101,6 +103,18 @@ body {
     padding: 40px;
     width: 200px;
     height: 200px;
+    float: left;
+}
+
+.team_and_button_B{
+   display: inline-block;
+    vertical-align: middle;
+    margin-left: 15px;
+    margin-right: 15px;
+    padding: 40px;
+    width: 200px;
+    height: 200px;
+    float: right;
 }
 
 .game_block_button{
