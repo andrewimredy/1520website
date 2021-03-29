@@ -64,4 +64,26 @@ def join_group(group_name, username, password):
         print("Failed to Join: Group size error")
         #failed to join because of group size
 
+# returns an entity from datastore
+def get_members_of_group(group_name):
+    query = datastore_client.query(kind="Group_Members")
+    query.add_filter("group_name", "=", group_name)
+    group_members = list(query.fetch())   #retrieves and puts entities in a list 
+    if not group_members:
+        print("empty list")
+        #need to handle this
+        return 
+    else:
+        #print(group_members[0]["username"])
+        return group_members
 
+# Pass in list of entities
+def get_data_of_members(group_name):
+    group_members = get_members_of_group(group_name)
+    members_list = []
+    for members in group_members:
+        query = datastore_client.query(kind="userCreds")
+        query.add_filter("username", "=", members["username"])
+        newMem = list(query.fetch())   #retrieves and puts entities in a list
+        members_list.append(newMem[0])
+    return members_list        

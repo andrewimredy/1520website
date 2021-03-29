@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, session, redirect
-from groups import GroupInfo, create_group 
+from groups import GroupInfo, create_group, join_group, get_data_of_members
 app = Flask(__name__)
 
 ### API INTERACTION ###
@@ -55,9 +55,8 @@ def stats_view():
 
 @app.route('/groups')
 def groups_view():
-    return render_template("groups.html")
-
-#@app.route()
+    members_list = get_data_of_members("first group")
+    return render_template("groups.html", group=members_list)
 
 @app.route('/groups/create_group', methods=["GET"])
 def create_group_view():
