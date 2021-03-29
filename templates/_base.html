@@ -12,9 +12,9 @@
                 <a class="navbar__link" href="/groups">Groups</a>
                 {% if user %}
                     <p class="account_name">{{user}}</p>
-                    <li class="nav_item"><a class="navbar__link" href="/auth/logout">Logout</a></li>
+                    <a class="navbar__user" href="/auth/logout">Logout</a>
                 {% else %}
-                    <li class="nav_item"><a class="navbar__link" href="/auth/login">Login</a></li>
+                    <a class="navbar__user" href="/auth/login">Login</a>
                 {% endif %}
             </ul>
         </nav>

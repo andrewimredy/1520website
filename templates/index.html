@@ -8,14 +8,14 @@
     <ul class="games">
         {% for game in newlist %}
         <li class="game_block">
-            <div class="game_time">
-                <h4 class="game_block_time"> {{ timelist[loop.index0] }} </h4>
-            </div>
-            <div class="team_and_button">
+            <div class="team_and_button_A">
                 <p class="game_block_team">{{ game.0 }}</p>
                 <button class="game_block_button">Bet 1</button>
             </div>
-            <div class="team_and_button">
+            <div class="game_time">
+                <h4 class="game_block_time"> {{ timelist[loop.index0] }} </h4>
+            </div>
+            <div class="team_and_button_B">
                 <p class="game_block_team">{{ game.1 }}</p>
                 <button class="game_block_button">Bet 2</button>
             </div>
