@@ -1,11 +1,13 @@
 #!/usr/bin/python3
-from flask import Flask, render_template
+from flask import Flask, render_template, session
 app = Flask(__name__)
 
 from google.cloud import datastore
 from auth import blue as auth_blueprint
 
 from user import userStore, generate_creds, hash_password
+
+app.register_blueprint(auth_blueprint, url_prefix="/auth")
 
 datastore_client = datastore.Client()
 userstore = userStore(datastore_client)
@@ -63,9 +65,9 @@ def stats_view():
 def groups_view():
     return render_template("groups.html")
 
-@app.route('/login')
-def login():
-    return render_template("login.html")
+#@app.route('/login')
+#def login():
+#    return render_template("login.html")
 
 def get_user():
     return session.get("user", None)
