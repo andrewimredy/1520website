@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 from flask import Flask, render_template, session
 app = Flask(__name__)
+app.secret_key = b"7131791ae45df500d74730c2c04f16439140977bff6cf792157a6c4e55b7"
 
 from google.cloud import datastore
 from auth import blue as auth_blueprint
@@ -64,10 +65,6 @@ def stats_view():
 @app.route('/groups')
 def groups_view():
     return render_template("groups.html")
-
-#@app.route('/login')
-#def login():
-#    return render_template("login.html")
 
 def get_user():
     return session.get("user", None)
