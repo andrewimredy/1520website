@@ -2,6 +2,13 @@
 from flask import Flask, render_template
 app = Flask(__name__)
 
+from google.cloud import datastore
+from auth import blue as auth_blueprint
+
+from user import userStore, generate_creds, hash_password
+
+datastore_client = datastore.Client()
+userstore = userStore(datastore_client)
 
 ### API INTERACTION ###
 import requests, json, backend
@@ -55,3 +62,15 @@ def stats_view():
 @app.route('/groups')
 def groups_view():
     return render_template("groups.html")
+
+@app.route('/login')
+def login():
+    return render_template("login.html")
+
+def get_user():
+    return session.get("user", None)
+
+def get_points(userStr):
+    user_key = userstore.ds.key("userCreds", userStr)
+    user = userstore.ds.get(user_key)
+    return user["points"]
