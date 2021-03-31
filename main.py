@@ -60,8 +60,10 @@ def profile_view():
 @app.route('/myStats')
 def stats_view():
     user = get_user()
-    points = get_points(user)    
-    return render_template("myStats.html" , user=user , points=points)
+    if user:
+        points = get_points(user)    
+        return render_template("myStats.html" , user=user , points=points)
+    return render_template("myStats.html" , user=user)
 
 @app.route('/groups')
 def groups_view():
