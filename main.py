@@ -1,13 +1,11 @@
 #!/usr/bin/python3
 from flask import Flask, render_template, session
-app = Flask(__name__)
-app.secret_key = b"7131791ae45df500d74730c2c04f16439140977bff6cf792157a6c4e55b7"
-
 from google.cloud import datastore
 from auth import blue as auth_blueprint
-
 from user import userStore, generate_creds, hash_password
 
+app = Flask(__name__)
+app.secret_key = b"7131791ae45df500d74730c2c04f16439140977bff6cf792157a6c4e55b7"
 app.register_blueprint(auth_blueprint, url_prefix="/auth")
 
 datastore_client = datastore.Client()
@@ -51,8 +49,9 @@ def get_game_info():
 
 @app.route('/')
 def main_page():
+    user = get_user()
     get_game_info()
-    return render_template("index.html", newlist=newlist, numgames=numgames,  timelist=timelist)
+    return render_template("index.html", newlist=newlist, numgames=numgames,  timelist=timelist, user=user)
 
 @app.route('/Profile')
 def profile_view():
@@ -60,11 +59,14 @@ def profile_view():
 
 @app.route('/myStats')
 def stats_view():
-    return render_template("myStats.html")
+    user = get_user()
+    points = get_points(user)    
+    return render_template("myStats.html" , user=user , points=points)
 
 @app.route('/groups')
 def groups_view():
-    return render_template("groups.html")
+    user = get_user()
+    return render_template("groups.html", user=user)
 
 def get_user():
     return session.get("user", None)
