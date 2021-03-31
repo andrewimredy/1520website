@@ -38,7 +38,9 @@ def get_game_info():
     numgames = json2['numGames'] #number of games being playd today
     
     for game in range(numgames):
-        teamlist.append([json2['games'][game]['vTeam']['triCode'], json2['games'][game]['hTeam']['triCode']])
+        teamlist.append([json2['games'][game]['vTeam']['triCode'], 
+                         json2['games'][game]['hTeam']['triCode'],
+                         json2['games'][game]['gameId']])
     for game in range(numgames):
         timelist.append(json2['games'][game]['startTimeEastern'])
     for i in teamlist:
