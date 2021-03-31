@@ -10,14 +10,18 @@
         <li class="game_block">
             <div class="team_and_button_A">
                 <p class="game_block_team">{{ game.0 }}</p>
-                <button class="game_block_button">Bet 1</button>
+                <a href="/bet/{{game.2}}/visitor">
+                    <button class="game_block_button">Bet Visitor</button>
+                </a>
             </div>
             <div class="game_time">
                 <h4 class="game_block_time"> {{ timelist[loop.index0] }} </h4>
             </div>
             <div class="team_and_button_B">
                 <p class="game_block_team">{{ game.1 }}</p>
-                <button class="game_block_button">Bet 2</button>
+                <a href="/bet/{{game.2}}/home">
+                    <button class="game_block_button">Bet Home</button>
+                </a>
             </div>
         </li>
         {% endfor %}

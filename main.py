@@ -15,7 +15,7 @@ userstore = userStore(datastore_client)
 import requests, json, backend
 
 timelist = [] #list of game times
-newlist = [] # list of games eg: ["Philadelphia 76ers", "Boston Celtics"]
+newlist = [] # list of games eg: ["Philadelphia 76ers", "Boston Celtics", "20034512"] visitor, home, id
 numgames = 0
 
 #Convenience method to turn abbreviation into full team name. declare this before using it
@@ -41,10 +41,9 @@ def get_game_info():
         teamlist.append([json2['games'][game]['vTeam']['triCode'], 
                          json2['games'][game]['hTeam']['triCode'],
                          json2['games'][game]['gameId']])
-    for game in range(numgames):
         timelist.append(json2['games'][game]['startTimeEastern'])
     for i in teamlist:
-        newlist.append([get_full_name(i[0]), get_full_name(i[1])])
+        newlist.append([get_full_name(i[0]), get_full_name(i[1]), i[2]])
     ### newlist contains all teams playing. ([0][0] vs [0][1], [1][0] vs [1][1])
 
 
@@ -54,6 +53,13 @@ def main_page():
     user = get_user()
     get_game_info()
     return render_template("index.html", newlist=newlist, numgames=numgames,  timelist=timelist, user=user)
+
+@app.route('/bet/<game>/<team>')
+def place_bet(game, team):
+    entity_key = datastore_client.key('bet', username + game)
+    bet_entity = datastore.Entity(key=entity_key)
+    bet_entity['team'] = team #home or away
+   
 
 @app.route('/Profile')
 def profile_view():

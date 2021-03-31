@@ -35,10 +35,3 @@ def update_games():
         datastore_client.put(game_entity)
 
 
-#A function to place a bet. This should be called when a user clicks a bet button on the main page
-def place_bet(username, game, team):
-
-    #create entity
-    entity_key = datastore_client.key('bet', username + game)
-    bet_entity = datastore.Entity(key=entity_key)
-    bet_entity['team'] = team #home or away

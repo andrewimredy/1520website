@@ -11,7 +11,7 @@
                 <a class="navbar__link" href="/myStats">My Stats</a>
                 <a class="navbar__link" href="/groups">Groups</a>
                 {% if user %}
-                    <a class="navbar_user" href="/myStats">{{user}}</a>
+                    <a class="navbar__user" href="/myStats">{{user}}</a>
                     <a class="navbar__user" href="/auth/logout">Logout</a>
                 {% else %}
                     <a class="navbar__user" href="/auth/login">Login</a>
