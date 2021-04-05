@@ -4,8 +4,11 @@
   <body>
       {% block content %}
     <h1>PittBett</h1>
-    <p>
-        Main content for the groups
-    </p>
+    <p class=group_button><a href="/groups/create_group">Create Group</a> </p>
+
+     {% for member in group %}
+        <p>username: {{member.username}}</p>
+     {% endfor %}
+
     {% endblock %}
   </body>

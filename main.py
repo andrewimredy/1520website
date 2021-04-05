@@ -1,8 +1,9 @@
 #!/usr/bin/python3
-from flask import Flask, render_template, session
+from flask import Flask, render_template, session, request, redirect
 from google.cloud import datastore
 from auth import blue as auth_blueprint
 from user import userStore, generate_creds, hash_password
+from groups import GroupInfo, create_group, join_group, get_data_of_members
 
 app = Flask(__name__)
 app.secret_key = b"7131791ae45df500d74730c2c04f16439140977bff6cf792157a6c4e55b7"
@@ -17,6 +18,7 @@ import requests, json, backend
 timelist = [] #list of game times
 newlist = [] # list of games eg: ["Philadelphia 76ers", "Boston Celtics", "20034512"] visitor, home, id
 numgames = 0
+
 
 #Convenience method to turn abbreviation into full team name. declare this before using it
 teams = (requests.get('http://data.nba.net/10s/prod/v2/2020/teams.json')).json()
@@ -61,6 +63,7 @@ def place_bet(game, team):
     bet_entity['team'] = team #home or away
    
 
+
 @app.route('/Profile')
 def profile_view():
     return render_template("profile.html")
@@ -73,11 +76,6 @@ def stats_view():
         return render_template("myStats.html" , user=user , points=points)
     return render_template("myStats.html" , user=user)
 
-@app.route('/groups')
-def groups_view():
-    user = get_user()
-    return render_template("groups.html", user=user)
-
 def get_user():
     return session.get("user", None)
 
@@ -85,3 +83,21 @@ def get_points(userStr):
     user_key = userstore.ds.key("userCreds", userStr)
     user = userstore.ds.get(user_key)
     return user["points"]
+
+@app.route('/groups')
+def groups_view():
+    members_list = get_data_of_members("first group")
+    return render_template("groups.html", group=members_list)
+
+@app.route('/groups/create_group', methods=["GET"])
+def create_group_view():
+    return render_template("create_group.html")
+
+@app.route('/groups/create_group', methods=["POST"])
+def create_group_post():
+    group_name = request.form.get("group_name")
+    group_size = request.form.get("group_size")
+    password = request.form.get("password")
+    create_group(group_name, group_size, password, "chris")
+    return redirect("/groups")
+
