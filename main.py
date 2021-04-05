@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 from flask import Flask, render_template, session, request, redirect
 from google.cloud import datastore
-from auth import blue as auth_blueprint
+from auth import blue as auth_blueprint, get_user
 from user import userStore, generate_creds, hash_password
 from groups import GroupInfo, create_group, join_group, get_data_of_members
 
@@ -75,9 +75,6 @@ def stats_view():
         points = get_points(user)    
         return render_template("myStats.html" , user=user , points=points)
     return render_template("myStats.html" , user=user)
-
-def get_user():
-    return session.get("user", None)
 
 def get_points(userStr):
     user_key = userstore.ds.key("userCreds", userStr)

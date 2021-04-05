@@ -74,7 +74,6 @@ def get_members_of_group(group_name):
         #need to handle this
         return 
     else:
-        #print(group_members[0]["username"])
         return group_members
 
 # Pass in list of entities
@@ -86,4 +85,5 @@ def get_data_of_members(group_name):
         query.add_filter("username", "=", members["username"])
         newMem = list(query.fetch())   #retrieves and puts entities in a list
         members_list.append(newMem[0])
+    print(members_list)
     return members_list        
