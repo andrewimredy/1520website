@@ -4,8 +4,11 @@
   <body>
       {% block content %}
     <h1>PittBett</h1>
-    <p>
-        Main content for the Stats page
-    </p>
+    {% if user %}
+        <p>Hello {{user}}</p>
+        <p>Points: {{points}}</p>
+    {% else %}
+        <p>No user</p>
+    {% endif %}
     {% endblock %}
   </body>

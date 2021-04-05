@@ -1,6 +1,3 @@
-html{
-    font-family: Lato, sans-serif;
-}
 
 *{
     box-sizing: inherit;
@@ -9,41 +6,54 @@ html{
 body {
     box-sizing: border-box;
     margin: 0;
-    background-color: lightblue;    
+    background-color: #EBEBEB;    
+    font-family: Verdana, sans-serif;
 }
 
 .navbar {
-    margin: 1% 1%;
-    padding: 20px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    overflow: hidden;
     font-size: 24px;
-    background-color: black;
+    background-color: #07749C;
 }
-
-.navbar__navigation{
-    display: flex;
-    flex-direction: row;
-    padding: 0;
-    list-style: none;
-    color: #5c6b70;
-}
-
-.nav_item{
-    margin-left: 50px;
-}
-
 .navbar__link{
+    float: left;
+    display: flex;
+    text-align: center;
     text-decoration: none;
-    color: white;
-    background-color: grey;
-    padding: 25px;
-    border-radius: 15px;
+    color: #1C1C21;
+    font-weight: bold;
+    padding: 20px;
 }
+.navbar__link:hover{
+    background-color: #E1515F;
+}
+
+.navbar__user{
+    float: right;
+    display: flex;
+    text-align: center;
+    text-decoration: none;
+    color: #1C1C21;
+    font-weight: bold;
+    padding: 20px;
+}
+.navbar__user:hover{
+    background-color: #E1515F;
+}
+
 .account_name{
     margin: 0;
     padding-right: 30px;
+}
+
+.main_title{
+    text-align: center;
+    padding: 10px;
+}
+.games_title{
+    text-align: center;
+    color: #07749C;
+    text-decoration: underline;
 }
 
 .games{
@@ -62,24 +72,30 @@ body {
     margin-right: auto;
     margin-left: auto;
     margin-bottom: 25px;
-    background-color: gray;
     display: inherit;
-    padding: 50px 20% 70px 20%;
+    
+    border-style: solid;
+    border-radius: 35px;
+    border-width: 7px;
+    border-color: #F41915;
+    background-color: #D3D6D9;
 }
 
 .game_block_team {
     font-size: 24px;
-    margin: 2;
-    color: greenyellow;
-    padding: 20px;
-    width: 200px;
+    text-decoration: bold;
+    margin: auto;
+    color: 07749C;
+    text-align: center;
 }
 
-.game_block_time {
-    margin: 20px;
+.game_time {
+    vertical-align: text-top;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.team_and_button{
+.team_and_button_A{
    display: inline-block;
     vertical-align: middle;
     margin-left: 15px;
@@ -87,6 +103,18 @@ body {
     padding: 40px;
     width: 200px;
     height: 200px;
+    float: left;
+}
+
+.team_and_button_B{
+   display: inline-block;
+    vertical-align: middle;
+    margin-left: 15px;
+    margin-right: 15px;
+    padding: 40px;
+    width: 200px;
+    height: 200px;
+    float: right;
 }
 
 .game_block_button{
@@ -100,5 +128,5 @@ body {
 }
 .game_block_button:hover{
     cursor: pointer;
-    background-color: #f8f8f8b0
+    background-color: #F41915
 }
