@@ -98,3 +98,6 @@ def create_group_post():
     create_group(group_name, group_size, password, "chris")
     return redirect("/groups")
 
+@app.route('/groups/join_group', methods=["GET"])
+def create_group_view():
+    return render_template("join_group.html")

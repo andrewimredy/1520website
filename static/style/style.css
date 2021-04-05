@@ -130,3 +130,29 @@ body {
     cursor: pointer;
     background-color: #F41915
 }
+
+#container {
+	width: 600px;
+	height: auto;
+}
+
+.row {
+	position: relative;
+	display: block;
+	width: 100%;
+	height: 40px;
+	border-bottom: 1px solid #AFAFAF;
+}
+
+.name {
+	position: relative;
+	display: inline-block;
+	width: 75%;
+	line-height: 45px;
+}
+
+.score {
+	position: relative;
+	display: inline-block;
+	width: 25%;
+}

@@ -5,10 +5,15 @@
       {% block content %}
     <h1>PittBett</h1>
     <p class=group_button><a href="/groups/create_group">Create Group</a> </p>
-
+    <p class=group_button><a href="/groups/join_group">Join Group</a> </p>
+    <div id="container"></div>
      {% for member in group %}
-        <p>username: {{member.username}}</p>
+        <!--<p>username: {{member.username}}</p>-->
+    <div class="row">
+        <div class="name">{{member.username}}</div><div class="score">{{member.points}}</div>
+    </div>
+    
      {% endfor %}
-
+    </div>
     {% endblock %}
   </body>

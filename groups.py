@@ -1,5 +1,6 @@
 import json
 # Imports the Google Cloud client library
+from auth import get_user
 from google.cloud import datastore
 # Instantiates a client
 datastore_client = datastore.Client()

@@ -1,0 +1,18 @@
+{% extends "_base.html" %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="centered">
+    <form action="/groups/create_group" method="POST" enctype="multipart/form-data">
+    <p>
+      <label>Group Name</label>
+      <input type="text" name="group_name" required>
+    </p>
+    <p>
+      <label>Password</label>
+      <input type="password" name="group_size">
+    </p>
+    <button type="submit">Join Group</button>
+  </form>
+</div>
+{% endblock %}
