@@ -26,44 +26,54 @@ def create_group(group_name, max_size, password, username):
     group["group_name"] = group_name
     group["group_size"] = 0
     group["password"] = password
-    group["max_size"] = max_size    
+    group["max_size"] = int(max_size)    
     group["owner"] = username
 
     # Saves the entity
     datastore_client.put(group)
-    join_group(group_name,username, password)
+    join_group(group_name, username, password)
     return True
 
-def join_group2(group_name, username):
-    # Have to check if the group actually exists and if the user is allowed to join
-    query = datastore_client.query(kind="Groups")
-    query.add_filter("group_name", "=", group_name)
-    groups = list(query.fetch())   #retrieves and puts entities in a list 
-    print(groups[0]["owner"])
 
 def join_group(group_name, username, password):
     # Have to check if the group actually exists and if the user is allowed to join
     query = datastore_client.query(kind="Groups")
     query.add_filter("group_name", "=", group_name)
     groups = list(query.fetch())
-    if (groups[0]["max_size"] > groups[0]["group_size"]):
-        if password == groups[0]["password"]:
+    if str(password) == "None":
+        pWord = ''
+    else:
+        pWord = password    
+    if pWord == groups[0]["password"]:  
+        print("Got password")         
+        if (groups[0]["max_size"] > groups[0]["group_size"]):
+            print("Good group size")
             # The Cloud Datastore key for the new entity
-            group_key = datastore_client.key("Group_Members")
+            kind = "Group_Members"
+            group_key = datastore_client.key(kind)
 
             # Prepares the new entity
             group_mem = datastore.Entity(key=group_key)
             # Put attrubutes from the group in this spot
             group_mem["group_name"] = group_name
             group_mem["username"] = username
-
+            
             # Saves the entity
             datastore_client.put(group_mem)
-        else:  #failed because of incorrect password
-            print("Failed to Join: Incorrect password")
-    else:
-        print("Failed to Join: Group size error")
-        #failed to join because of group size
+            
+            groupKey = datastore_client.key("Groups", group_name)
+            groups = datastore_client.get(groupKey)
+
+            groups["group_size"] += 1
+
+            datastore_client.put(groups)
+
+        else:  #failed to join because of group size
+            print("Failed to Join: Group size error")
+    else:#failed because of incorrect password
+        print("Failed to Join: Incorrect password")
+    return
+        
 
 # returns an entity from datastore
 def get_members_of_group(group_name):
@@ -86,5 +96,14 @@ def get_data_of_members(group_name):
         query.add_filter("username", "=", members["username"])
         newMem = list(query.fetch())   #retrieves and puts entities in a list
         members_list.append(newMem[0])
-    print(members_list)
-    return members_list        
+    return members_list
+
+
+def get_groups_user_is_in(username):
+    query = datastore_client.query(kind="Group_Members")
+    query.add_filter("username", "=", username)
+    groups = list(query.fetch())
+    groupNames = list()    
+    for name in groups:
+        groupNames.append(name["group_name"])
+    return groupNames
