@@ -9,7 +9,10 @@
     <div id="container"></div>
     {% if groups is not none %}
         {% for group in groups %}
-            <div>{{ groupNames[loop.index0] }}</div>
+            <div class="group_name">{{ groupNames[loop.index0] }}</div>
+            <div class="row_header">
+                    <div class="name_header">Username</div><div class="score_header">Points</div>
+            </div>
             {% for member in group %}
                 <div class="row">
                     <div class="name">{{member.username}}</div><div class="score">{{member.points}}</div>

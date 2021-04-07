@@ -141,10 +141,26 @@ body {
 	display: block;
 	width: 100%;
 	height: 40px;
-	border-bottom: 1px solid #AFAFAF;
+    border-bottom: 1px solid #F41915;
+    background-color: #D3D6D9;
 }
 
+.row_header {
+	position: relative;
+	display: block;
+	width: 100%;
+    height: 40px;
+    font-weight: bold; 
+    border-bottom: 1px solid #F41915;       
+}
 .name {
+	position: relative;
+	display: inline-block;
+	width: 75%;
+	line-height: 45px;
+}
+
+.name_header {
 	position: relative;
 	display: inline-block;
 	width: 75%;
@@ -156,3 +172,18 @@ body {
 	display: inline-block;
 	width: 25%;
 }
+
+.score_header {
+	position: relative;
+	display: inline-block;
+	width: 25%;
+}
+.group_name{
+    justify-content: center;
+    margin: auto;
+    padding-top: 50px;
+    width: 50%;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    }

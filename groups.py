@@ -93,9 +93,9 @@ def get_data_of_members(group_name):
     members_list = []
     for members in group_members:
         query = datastore_client.query(kind="userCreds")
-        query.add_filter("username", "=", members["username"])
+        query.add_filter("username", "=", members["username"])        
         newMem = list(query.fetch())   #retrieves and puts entities in a list
-        members_list.append(newMem[0])
+        members_list.append(newMem[0])        
     return members_list
 
 
