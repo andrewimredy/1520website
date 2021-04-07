@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 from flask import Flask, render_template, session, request, redirect
 from google.cloud import datastore
-from auth import blue as auth_blueprint
+from auth import blue as auth_blueprint, get_user
 from user import userStore, generate_creds, hash_password
-from groups import GroupInfo, create_group, join_group, get_data_of_members
+from groups import GroupInfo, create_group, join_group, get_data_of_members, get_groups_user_is_in
 
 app = Flask(__name__)
 app.secret_key = b"7131791ae45df500d74730c2c04f16439140977bff6cf792157a6c4e55b7"
@@ -76,9 +76,6 @@ def stats_view():
         return render_template("myStats.html" , user=user , points=points)
     return render_template("myStats.html" , user=user)
 
-def get_user():
-    return session.get("user", None)
-
 def get_points(userStr):
     user_key = userstore.ds.key("userCreds", userStr)
     user = userstore.ds.get(user_key)
@@ -86,8 +83,17 @@ def get_points(userStr):
 
 @app.route('/groups')
 def groups_view():
-    members_list = get_data_of_members("first group")
-    return render_template("groups.html", group=members_list)
+    user = get_user()
+    groups = list()
+    if not user:
+        return redirect("/auth/login")
+    groupNames = get_groups_user_is_in(user) #returns a list
+    if not groupNames: #empty
+        print("Not a member of a group")
+    else: #not empty
+        for group in groupNames:
+            groups.append(get_data_of_members(group))
+    return render_template("groups.html", groups=groups, user=user, groupNames = groupNames)
 
 @app.route('/groups/create_group', methods=["GET"])
 def create_group_view():
@@ -96,8 +102,20 @@ def create_group_view():
 @app.route('/groups/create_group', methods=["POST"])
 def create_group_post():
     group_name = request.form.get("group_name")
-    group_size = request.form.get("group_size")
+    max_size = request.form.get("max_size")
+    username = get_user()
     password = request.form.get("password")
-    create_group(group_name, group_size, password, "chris")
+    create_group(group_name, max_size, password, username)
     return redirect("/groups")
 
+@app.route('/groups/join_group', methods=["GET"])
+def join_group_view():
+    return render_template("join_group.html")
+
+@app.route('/groups/join_group', methods=["POST"])
+def join_group_post():
+    group_name = request.form.get("group_name")
+    username = get_user()    
+    password = request.form.get("password")    
+    join_group(group_name, username, password)
+    return redirect("/groups")
