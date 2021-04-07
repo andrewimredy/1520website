@@ -9,18 +9,19 @@
     <div id="container"></div>
     {% if groups is not none %}
         {% for group in groups %}
-            <div class="group_name">{{ groupNames[loop.index0] }}</div>
-            <div class="row_header">
-                    <div class="name_header">Username</div><div class="score_header">Points</div>
+        {% set outer_loop = loop %}        
+            <div class="group_name_{{ loop.index0 }}">{{ groupNames[loop.index0] }}</div>
+            <div id="row_header">
+                    <div id="name_header">Username</div><div id="score_header">Points</div>
             </div>
             {% for member in group %}
-                <div class="row">
+                <div class="row_{{ outer_loop.index0 }}_{{ loop.index0 }}">
                     <div class="name">{{member.username}}</div><div class="score">{{member.points}}</div>
                 </div>
             
             {% endfor %}
         {% endfor %}
     {% endif %}
-    </div>
+    <script src="/static/group.js"></script>
     {% endblock %}
   </body>
