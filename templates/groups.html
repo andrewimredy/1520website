@@ -4,8 +4,23 @@
   <body>
       {% block content %}
     <h1>PittBett</h1>
-    <p>
-        Main content for the groups
-    </p>
+    <p class=group_button><a href="/groups/create_group">Create Group</a> </p>
+    <p class=group_button><a href="/groups/join_group">Join Group</a> </p>
+    <div id="container"></div>
+    {% if groups is not none %}
+        {% for group in groups %}
+            <div class="group_name">{{ groupNames[loop.index0] }}</div>
+            <div class="row_header">
+                    <div class="name_header">Username</div><div class="score_header">Points</div>
+            </div>
+            {% for member in group %}
+                <div class="row">
+                    <div class="name">{{member.username}}</div><div class="score">{{member.points}}</div>
+                </div>
+            
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+    </div>
     {% endblock %}
   </body>
