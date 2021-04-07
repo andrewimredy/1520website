@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from flask import Flask, render_template, session
+from flask import Flask, render_template, session, redirect
 from google.cloud import datastore
 from auth import blue as auth_blueprint
 from user import userStore, generate_creds, hash_password
@@ -56,9 +56,16 @@ def main_page():
 
 @app.route('/bet/<game>/<team>')
 def place_bet(game, team):
-    entity_key = datastore_client.key('bet', username + game)
+    if not get_user():
+        return redirect('/')
+    entity_key = datastore_client.key('bet', get_user() + game)
     bet_entity = datastore.Entity(key=entity_key)
     bet_entity['team'] = team #home or away
+    bet_entity['user'] = get_user()
+    bet_entity['game'] = game
+    bet_entity['result'] = 'none'
+    datastore_client.put(bet_entity)
+    return redirect('/')
    
 
 @app.route('/Profile')
