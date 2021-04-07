@@ -37,6 +37,7 @@ def create_group(group_name, max_size, password, username):
 
 def join_group(group_name, username, password):
     # Have to check if the group actually exists and if the user is allowed to join
+    inGroup = False
     query = datastore_client.query(kind="Groups")
     query.add_filter("group_name", "=", group_name)
     groups = list(query.fetch())
@@ -47,27 +48,34 @@ def join_group(group_name, username, password):
     if pWord == groups[0]["password"]:  
         print("Got password")         
         if (groups[0]["max_size"] > groups[0]["group_size"]):
-            print("Good group size")
-            # The Cloud Datastore key for the new entity
-            kind = "Group_Members"
-            group_key = datastore_client.key(kind)
+            members = get_members_of_group(group_name)
+            for member in members:
+                if member["username"] == username:
+                    inGroup = True
+                    break 
+            if(not inGroup):
+                print("Good group size")
+                # The Cloud Datastore key for the new entity
+                kind = "Group_Members"
+                group_key = datastore_client.key(kind)
 
-            # Prepares the new entity
-            group_mem = datastore.Entity(key=group_key)
-            # Put attrubutes from the group in this spot
-            group_mem["group_name"] = group_name
-            group_mem["username"] = username
-            
-            # Saves the entity
-            datastore_client.put(group_mem)
-            
-            groupKey = datastore_client.key("Groups", group_name)
-            groups = datastore_client.get(groupKey)
+                # Prepares the new entity
+                group_mem = datastore.Entity(key=group_key)
+                # Put attrubutes from the group in this spot
+                group_mem["group_name"] = group_name
+                group_mem["username"] = username
+                
+                # Saves the entity
+                datastore_client.put(group_mem)
+                
+                groupKey = datastore_client.key("Groups", group_name)
+                groups = datastore_client.get(groupKey)
 
-            groups["group_size"] += 1
+                groups["group_size"] += 1
 
-            datastore_client.put(groups)
-
+                datastore_client.put(groups)
+            else:#failed because already in group
+                print("Already in group")
         else:  #failed to join because of group size
             print("Failed to Join: Group size error")
     else:#failed because of incorrect password
