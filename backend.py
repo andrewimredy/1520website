@@ -55,4 +55,5 @@ def update_bets():
         else:
             bet.update({'result': 'loss'})
         datastore_client.put(bet)
-        datastore_client.put(user)            
+        datastore_client.put(user)  
+                  
