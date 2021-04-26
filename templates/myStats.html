@@ -1,14 +1,68 @@
+<style>
+    #showMoreGroup{
+        display: none;
+    }
+    #showMoreBet{
+        display: none;
+    }    
+</style>
+
 {% extends "_base.html" %}
 {% block title %}PittBet Home{% endblock %}
 
-  <body>
-      {% block content %}
+<body>
+    {% block content %}
     <h1>PittBett</h1>
     {% if user %}
         <p>Hello {{user}}</p>
         <p>Points: {{points}}</p>
+        <p>Groups:</p>
+        <span id="dotsGroup">...</span>
+        <span id="showMoreGroup">
+            {% for group in groups %}
+                {{ groupNames[loop.index0] }}
+                <br>
+            {% endfor %}
+        </span>
+        <br><button onclick="toggleGroups()" id="buttonGroup">Show Groups</button>
+        <p>Bets:</p>
+        <span id="dotsBet">...</span>
+
+        <span id="showMoreBet">THIS IS WHERE THE BETS ARE GOING TO GO</span>
+
+        <br><button onclick="toggleBets()" id="buttonBet">Show Bets</button>        
     {% else %}
-        <p>No user</p>
+        <p>No user. Please sign-in in order to view your points.</p>
     {% endif %}
+    <script>
+        function toggleGroups(){
+            var showMoreGroup = document.getElementById("showMoreGroup");
+            var buttonGroup = document.getElementById("buttonGroup");
+            var dotsGroup = document.getElementById("dotsGroup");
+            if(dotsGroup.style.display === "none"){
+                dotsGroup.style.display = "inline";
+                buttonGroup.innerHTML = "Show Groups";
+                showMoreGroup.style.display = "none";
+            }else{
+                dotsGroup.style.display = "none";
+                buttonGroup.innerHTML = "Hide Groups";
+                showMoreGroup.style.display = "inline";
+            }
+        }
+        function toggleBets(){
+            var showMoreBet = document.getElementById("showMoreBet");
+            var buttonBet = document.getElementById("buttonBet");
+            var dotsBet = document.getElementById("dotsBet");
+            if(dotsBet.style.display === "none"){
+                dotsBet.style.display = "inline";
+                buttonBet.innerHTML = "Show Bets";
+                showMoreBet.style.display = "none";
+            }else{
+                dotsBet.style.display = "none";
+                buttonBet.innerHTML = "Hide Bets";
+                showMoreBet.style.display = "inline";
+            }
+        }
+    </script>
     {% endblock %}
-  </body>
+</body>

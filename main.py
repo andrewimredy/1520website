@@ -80,9 +80,13 @@ def profile_view():
 @app.route('/myStats')
 def stats_view():
     user = get_user()
+    groups = list()
     if user:
-        points = get_points(user)    
-        return render_template("myStats.html" , user=user , points=points)
+        points = get_points(user)
+        groupNames = get_groups_user_is_in(user)
+        for group in groupNames:
+            groups.append(get_data_of_members(group))
+        return render_template("myStats.html" , user=user , points=points , groups=groups , groupNames=groupNames)
     return render_template("myStats.html" , user=user)
 
 def get_points(userStr):
