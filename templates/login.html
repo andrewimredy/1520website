@@ -10,18 +10,27 @@
         border-radius: 2px;
         padding: 0px 0px 5px 5px;
     }
+    p{
+        color: white;
+        text-align: center;
+        border: 5px red;
+        background-color: red;
+    }
 </style>
 
 {% extends "_base.html" %}
 {% block title %}Login{% endblock %}
 
 {% block content %}
+{% if error is not none %}
+<p>{{error}}</p>
+{% endif %}
 <form id="login-form" action="/auth/login" method="POST" enctype="multipart/form-data">
     <input type="text" name="username" placeholder="Username" id="login-form-field">
     <input type="password" name="password" placeholder="Password" id="login-form-field">
     <button type="submit">Login</button>
-    <p>
+    <div>
         <a href="/auth/signup">New User?</a>
-    </p>
+    </div>
 </form>
 {% endblock %}

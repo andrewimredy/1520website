@@ -21,7 +21,7 @@ def handle_login():
     password = request.form.get("password")
     user = userstore.verify_password(username, password)
     if not user:
-        return render_template("login.html", auth=True, error="Password did not match.")
+        return render_template("login.html", auth=True, error="Username and/or password is incorrect")
     session["user"] = username
     return redirect("/")
 
@@ -41,10 +41,17 @@ def show_signup():
 def handle_signup():
     username = request.form.get("username")
     password = request.form.get("password")
-#    if username in userstore.list_existing_users():
-#        return render_template(
-#            "signup.html", auth=True, error="A user with that username already exists"
-#        )
+    password_conf = request.form.get("confirm-password")    
+    if username in userstore.list_existing_users():
+        return render_template(
+            "signup.html", auth=True, error="A user with that username already exists"
+        )
+    if(password != password_conf):
+        return render_template("signup.html", auth=True, error="Passwords don't match")
+    if(password == ''):
+        return render_template("signup.html", auth=True, error="Passwords cannot be empty")
+    if(password_conf == ''):
+        return render_template("signup.html", auth=True, error="Passwords cannot be empty")
     userstore.store_new_credentials(generate_creds(username, password))
     session["user"] = username
     return redirect("/")
