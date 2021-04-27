@@ -162,9 +162,12 @@ body {
 
 #name_header {
 	position: relative;
-	display: inline-block;
-	width: 75%;
-	line-height: 45px;
+    display: inline-block;
+    width: auto;
+    line-height: 45px;
+    cursor: pointer;
+    padding: 0px;
+    margin-right: 20%;
 }
 
 [class^="score"] {
@@ -174,9 +177,11 @@ body {
 }
 
 #score_header {
-	position: relative;
-	display: inline-block;
-	width: 25%;
+	pposition: relative;
+    display: inline-block;
+    width: auto;
+    cursor: pointer;
+    margin-left: 48%;
 }
 [class^="group_name"]{
     justify-content: center;
