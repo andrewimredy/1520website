@@ -1,27 +1,45 @@
 {% extends "_base.html" %}
 {% block title %}PittBett Groups{% endblock %}
 
-  <body>
+<body>
       {% block content %}
+    <script type="text/javascript" {{ url_for('static', filename='group.js')}}></script>
+    <script src="/static/group.js"></script>
+    <script type="text/javascript">
+    //var parsed = JSON.parse('{{groups}}');
+    storeList('{{listForJavascript|tojson}}');
+    </script>
     <h1>PittBett</h1>
     <p class=group_button><a href="/groups/create_group">Create Group</a> </p>
     <p class=group_button><a href="/groups/join_group">Join Group</a> </p>
     <div id="container"></div>
     {% if groups is not none %}
-        {% for group in groups %}
-        {% set outer_loop = loop %}        
-            <div class="group_name_{{ loop.index0 }}">{{ groupNames[loop.index0] }}</div>
-            <div id="row_header">
-                    <div id="name_header">Username</div><div id="score_header">Points</div>
-            </div>
-            {% for member in group %}
-                <div class="row_{{ outer_loop.index0 }}_{{ loop.index0 }}">
-                    <div class="name">{{member.username}}</div><div class="score">{{member.points}}</div>
-                </div>
-            
-            {% endfor %}
-        {% endfor %}
+    {% for group in groups %}
+    {% set outer_loop = loop %}        
+    <div class="group_name_{{ loop.index0 }}">{{ groupNames[loop.index0] }}</div>
+    <div id="row_header">
+        <div id="name_header" class="name_header_{{ loop.index0 }}">Username</div><div id="score_header" class="score_header_{{ loop.index0 }}">Points</div>
+    </div>
+    {% for member in group %}
+    <div class="row_{{ outer_loop.index0 }}_{{ loop.index0 }}">
+        <!--<div class="name">{{member.username}}</div><div class="score">{{member.points}}</div>-->
+    </div>
+    
+    {% endfor %}
+    {% endfor %}
     {% endif %}
+    <script type="text/javascript" {{ url_for('static', filename='group.js')}}></script>
     <script src="/static/group.js"></script>
+    <script type="text/javascript">
+    //var parsed = JSON.parse('{{groups}}');
+    storeList('{{listForJavascript|tojson}}', '{{numberOfGroups}}');
+    console.log("number of groups = " + '{{numberOfGroups}}')
+    for(var i = 0; i < '{{numberOfGroups}}'; i++){
+        ascSortByPoints(i);
+    }
+    addEventListeners('{{numberOfGroups}}');
+    renderAllLeaderBoards('{{numberOfGroups}}');    
+    </script>
+    <!--<script src="/static/group.js"></script>
     {% endblock %}
   </body>

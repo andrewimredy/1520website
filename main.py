@@ -93,7 +93,30 @@ def groups_view():
     else: #not empty
         for group in groupNames:
             groups.append(get_data_of_members(group))
-    return render_template("groups.html", groups=groups, user=user, groupNames = groupNames)
+        listForJavascript = convertToList(groups)
+        #print(listForJavascript)
+        #data = 
+        #test = gql_json_parser(groups)
+    return render_template("groups.html", groups=groups, user=user, groupNames = groupNames, listForJavascript = listForJavascript, numberOfGroups = len(groupNames))
+
+def convertToList(groups):
+    newGroups = []
+    for group in groups:
+        newGroup = []
+        newGroups.append(newGroup)        
+        for member in group:
+            newMember = []
+            newMember.append(member['username'])
+            newMember.append(member['points'])
+            newGroup.append(newMember)
+    return newGroups
+
+
+def gql_json_parser(query_obj):
+    result = []
+    for entry in query_obj:
+        result.append(dict([(p, unicode(getattr(entry, p))) for p in entry.properties()]))
+    return result
 
 @app.route('/groups/create_group', methods=["GET"])
 def create_group_view():
