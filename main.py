@@ -54,22 +54,13 @@ def get_game_info():
 def main_page():
     user = get_user()
     get_game_info()
-    backend.update_games()
-    backend.update_bets()
     return render_template("index.html", newlist=newlist, numgames=numgames,  timelist=timelist, user=user)
 
 @app.route('/bet/<game>/<team>')
 def place_bet(game, team):
-    if not get_user():
-        return redirect('/')
-    entity_key = datastore_client.key('bet', get_user() + game)
+    entity_key = datastore_client.key('bet', username + game)
     bet_entity = datastore.Entity(key=entity_key)
     bet_entity['team'] = team #home or away
-    bet_entity['user'] = get_user()
-    bet_entity['game'] = game
-    bet_entity['result'] = 'none'.decode('utf-8')
-    datastore_client.put(bet_entity)
-    return redirect('/')
    
 
 
