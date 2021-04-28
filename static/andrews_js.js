@@ -38,13 +38,15 @@ function changeBetBox(gameId, team){
 //changes bet box for bets already placed..
 window.onload = function showPrevBets(){
     let gameBlocks = document.getElementsByClassName('game_block');
-    for (i = 0; i < gameBlocks.length; i++){
-        let id = gameBlocks[i].getElementsByClassName('game_time')[0].getElementsByClassName('game_block_time')[0].id
-        id = id.substring(1)
-        let betTeam = localStorage.getItem(id);
-        if(betTeam){
-            changeBetBox(id, betTeam);
-        }        
-    }   
+    if(document.getElementById('username')){    
+        for (i = 0; i < gameBlocks.length; i++){
+            let id = gameBlocks[i].getElementsByClassName('game_time')[0].getElementsByClassName('game_block_time')[0].id
+            id = id.substring(1)
+            let betTeam = localStorage.getItem(id);
+            if(betTeam){
+                changeBetBox(id, betTeam);
+            }        
+        }  
+    } 
     return; 
 }
