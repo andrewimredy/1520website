@@ -10,8 +10,10 @@
     storeList('{{listForJavascript|tojson}}');
     </script>
     <h1>PittBett</h1>
-    <p class=group_button><a href="/groups/create_group">Create Group</a> </p>
-    <p class=group_button><a href="/groups/join_group">Join Group</a> </p>
+    <div>
+        <a class="group_button create_button" href="/groups/create_group">Create Group</a>
+        <a class="group_button join_button" href="/groups/join_group">Join Group</a>
+    </div>
     <div id="container"></div>
     {% if groups is not none %}
     {% for group in groups %}
@@ -40,6 +42,5 @@
     addEventListeners('{{numberOfGroups}}');
     renderAllLeaderBoards('{{numberOfGroups}}');    
     </script>
-    <!--<script src="/static/group.js"></script>
     {% endblock %}
   </body>
