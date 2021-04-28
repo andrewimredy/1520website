@@ -16,22 +16,22 @@ def update_games():
     numgames = json2['numGames']    
     #loop thru games of today
     for game in json2['games']:
+        if not game['isRecapArticleAvail']: # game not finished
+            status = 'not_done'
+            winner = 'none'
+        else:
+            status = 'done'
+            if game['hTeam']['score'] > game['vTeam']['score']:
+                winner = 'home'
+            else:
+                winner = 'visitor'
+        #upload record to datastore
         entity_key =  datastore_client.key('game', game['gameId'])
         game_entity = datastore.Entity(key=entity_key)
         game_entity['home_team'] = game['hTeam']['triCode']
         game_entity['visitor_team'] = visitor_team = game['vTeam']['triCode']
-
-        if not game['isRecapArticleAvail']: # game not finished
-            game_entity['status'] = 'not_done'
-            game_entity['winner'] = 'none'
-        else:
-            game_entity['status'] = 'done'
-            if game['hTeam']['score'] > game['vTeam']['score']:
-                game_entity['winner'] = 'home'
-            else:
-                game_entity['winner'] = 'visitor'
-        #upload record to datastore
-        
+        game_entity['status'] =  status
+        game_entity['winner'] = winner
         datastore_client.put(game_entity)
 
 
@@ -49,11 +49,9 @@ def update_bets():
         user = datastore_client.get(datastore_client.key('userCreds', bet['user']))
         print(user)
         if game['winner'] == bet['team']: #if bet wins, add 100pts to user
-            bet.update({'result': 'win'})
+            bet.update({'result': 'win'.decode('utf-8')})
             oldpoints = user['points']
             user.update({'points': (oldpoints +100)})
         else:
-            bet.update({'result': 'loss'})
+            bet.update({'result': 'loss'.decode('utf-8')})
         datastore_client.put(bet)
-        datastore_client.put(user)  
-                  

@@ -5,23 +5,19 @@
       {% block content %}
     <h1 class=main_title>Welcome to PittBett</h1>
     <h2 class=games_title>Today's Games: {{ newlist |length }}</h2> 
-    <ul class="games">
+    <ul class="games" onload="showPrevBets()">
         {% for game in newlist %}
         <li class="game_block">
-            <div class="team_and_button_A">
+            <div class="team_and_button_A" id="a{{ game.2 }}">
                 <p class="game_block_team">{{ game.0 }}</p>
-                <a href="/bet/{{game.2}}/visitor">
-                    <button class="game_block_button">Bet Visitor</button>
-                </a>
+                    <button class="game_block_button" id="v{{ game.2 }}" onclick="placeBet(this.id)">Bet Visitor</button>
             </div>
             <div class="game_time">
-                <h4 class="game_block_time" id={{game.2}}> {{ timelist[loop.index0] }} </h4>
+                <h4 class="game_block_time" id="t{{ game.2 }}"> {{ timelist[loop.index0] }} </h4>
             </div>
-            <div class="team_and_button_B">
+            <div class="team_and_button_B" id="b{{ game.2 }}">
                 <p class="game_block_team">{{ game.1 }}</p>
-                <a href="/bet/{{game.2}}/home">
-                    <button class="game_block_button">Bet Home</button>
-                </a>
+                    <button class="game_block_button" id="h{{ game.2 }}"onclick="placeBet(this.id)">Bet Home</button>
             </div>
         </li>
         {% endfor %}

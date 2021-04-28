@@ -4,6 +4,7 @@
         <!--<link rel="stylesheet" href="static/style.css" />-->
         <link href="{{ url_for('static', filename='style/style.css')}}" rel="stylesheet"/>
         <script src="{{ url_for('static', filename='andrews_js.js')}}"></script>
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     </head>
     <body>
      <!-- Beginning of Header-->   
@@ -12,7 +13,7 @@
                 <a class="navbar__link" href="/myStats">My Stats</a>
                 <a class="navbar__link" href="/groups">Groups</a>
                 {% if user %}
-                    <a class="navbar__user" href="/myStats">{{user}}</a>
+                    <a class="navbar__user" id="username" href="/myStats">{{user}}</a>
                     <a class="navbar__user" href="/auth/logout">Logout</a>
                 {% else %}
                     <a class="navbar__user" href="/auth/login">Login</a>

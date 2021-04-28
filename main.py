@@ -1,9 +1,11 @@
 #!/usr/bin/python3
-from flask import Flask, render_template, session, request, redirect
+from flask import Flask, render_template, session, request, redirect, jsonify
 from google.cloud import datastore
 from auth import blue as auth_blueprint, get_user
 from user import userStore, generate_creds, hash_password
-from groups import GroupInfo, create_group, join_group, get_data_of_members, get_groups_user_is_in
+from groups import GroupInfo, create_group, join_group, get_data_of_members, get_groups_user_is_in, get_all_users
+import time, atexit
+from apscheduler.schedulers.background import BackgroundScheduler
 
 app = Flask(__name__)
 app.secret_key = b"7131791ae45df500d74730c2c04f16439140977bff6cf792157a6c4e55b7"
@@ -46,7 +48,7 @@ def get_game_info():
         timelist.append(json2['games'][game]['startTimeEastern'])
     for i in teamlist:
         newlist.append([get_full_name(i[0]), get_full_name(i[1]), i[2]])
-    ### newlist contains all teams playing. ([0][0] vs [0][1], [1][0] vs [1][1])
+    ### newlist contains all teams playing. ([0][0][gameId] vs [0][1], [1][0] vs [1][1])
 
 
 def get_bets_for_user(user):
@@ -56,26 +58,29 @@ def get_bets_for_user(user):
     bets = list(query.add_filter('result', '=', 'none').fetch())
     return bets
 
+##atomatic updating:
+scheduler = BackgroundScheduler()
+scheduler.add_job(func=backend.update_games, trigger='interval', seconds=600)
+scheduler.add_job(func=backend.update_bets, trigger='interval', seconds=600)
+
 @app.route('/')
 def main_page():
     user = get_user()
     get_game_info()
-    backend.update_games()
-    backend.update_bets()
     return render_template("index.html", newlist=newlist, numgames=numgames,  timelist=timelist, user=user)
 
-@app.route('/bet/<game>/<team>')
+@app.route('/bet/<game>/<team>', methods=['POST']) #places bet, called by js on click
 def place_bet(game, team):
     if not get_user():
-        return redirect('/')
+        return redirect('/auth/login')
     entity_key = datastore_client.key('bet', get_user() + game)
     bet_entity = datastore.Entity(key=entity_key)
-    bet_entity['team'] = team #home or away
+    bet_entity['team'] = team #home or visitor
     bet_entity['user'] = get_user()
     bet_entity['game'] = game
-    bet_entity['result'] = 'none'.decode('utf-8')
+    bet_entity['result'] = 'none'
     datastore_client.put(bet_entity)
-    return redirect('/')
+    return jsonify(success=True)
    
 
 
@@ -112,12 +117,24 @@ def groups_view():
     if not user:
         return redirect("/auth/login")
     groupNames = get_groups_user_is_in(user) #returns a list
-    if not groupNames: #empty
-        print("Not a member of a group")
-    else: #not empty
-        for group in groupNames:
-            groups.append(get_data_of_members(group))
-    return render_template("groups.html", groups=groups, user=user, groupNames = groupNames)
+    groups.append(get_all_users())   
+    for group in groupNames:
+        groups.append(get_data_of_members(group))
+    groupNames.insert(0, "Global LeaderBoard")
+    listForJavascript = convertToList(groups)
+    return render_template("groups.html", groups=groups, user=user, groupNames = groupNames, listForJavascript = listForJavascript, numberOfGroups = len(groupNames))
+
+def convertToList(groups):
+    newGroups = []
+    for group in groups:
+        newGroup = []
+        newGroups.append(newGroup)        
+        for member in group:
+            newMember = []
+            newMember.append(member['username'])
+            newMember.append(member['points'])
+            newGroup.append(newMember)
+    return newGroups
 
 @app.route('/groups/create_group', methods=["GET"])
 def create_group_view():
@@ -140,6 +157,6 @@ def join_group_view():
 def join_group_post():
     group_name = request.form.get("group_name")
     username = get_user()    
-    password = request.form.get("password")    
+    password = request.form.get("group_password")    
     join_group(group_name, username, password)
     return redirect("/groups")
