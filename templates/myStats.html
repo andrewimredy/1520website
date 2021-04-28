@@ -4,7 +4,19 @@
     }
     #showMoreBet{
         display: none;
+    }
+    h1{
+        margin-left: 25px;
+    }
+    p{
+        margin-left: 45px;
     }    
+    h2{
+        margin-left: 25px;
+    }
+    button{
+        margin-left: 45px;
+    }
 </style>
 
 {% extends "_base.html" %}
@@ -16,21 +28,28 @@
     {% if user %}
         <p>Hello {{user}}</p>
         <p>Points: {{points}}</p>
-        <p>Groups:</p>
-        <span id="dotsGroup">...</span>
+        <h2>Groups:</h2>
+        <span id="dotsGroup"></span>
+        <button onclick="toggleGroups()" id="buttonGroup">Show Groups</button>
         <span id="showMoreGroup">
+            <br>
             {% for group in groups %}
                 {{ groupNames[loop.index0] }}
                 <br>
             {% endfor %}
         </span>
-        <br><button onclick="toggleGroups()" id="buttonGroup">Show Groups</button>
-        <p>Bets:</p>
-        <span id="dotsBet">...</span>
-
-        <span id="showMoreBet">THIS IS WHERE THE BETS ARE GOING TO GO</span>
-
-        <br><button onclick="toggleBets()" id="buttonBet">Show Bets</button>        
+        <br>
+        <h2>Bets:</h2>
+        <span id="dotsBet"></span>
+        <button onclick="toggleBets()" id="buttonBet">Show Bets</button>
+        <span id="showMoreBet">
+            <br>
+            {% for bet in bets %}
+                {{ games[loop.index0]["visitor_team"] }} vs {{ games[loop.index0]["home_team"]}}
+                <br>
+            {% endfor %}
+        </span>
+        <br>        
     {% else %}
         <p>No user. Please sign-in in order to view your points.</p>
     {% endif %}
