@@ -102,9 +102,7 @@ def get_data_of_members(group_name):
         query = datastore_client.query(kind="userCreds")
         query.add_filter("username", "=", members["username"])        
         newMem = list(query.fetch())   #retrieves and puts entities in a list
-        #print(newMem)
-        members_list.append(newMem[0])
-    print(members_list)        
+        members_list.append(newMem[0])       
     return members_list
 
 

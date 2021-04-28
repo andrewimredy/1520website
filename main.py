@@ -133,6 +133,6 @@ def join_group_view():
 def join_group_post():
     group_name = request.form.get("group_name")
     username = get_user()    
-    password = request.form.get("password")    
+    password = request.form.get("group_password")    
     join_group(group_name, username, password)
     return redirect("/groups")
