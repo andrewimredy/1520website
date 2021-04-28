@@ -3,7 +3,7 @@ var numberOfGroups;
 var sortedByName = false;
 var sortedByPoints = true;
 var asc = true;
-var globalTest;
+//var globalTest;
 
 window.onload = function() {
     /*
@@ -124,7 +124,7 @@ function addEventListeners(numberOfGroups){
     for(var i = 0; i < numberOfGroups; i++){
         var username = document.querySelector('.name_header_' + i);
         var points = document.querySelector('.score_header_' + i);
-        globalTest = i;
+        let globalTest = i;
         username.addEventListener("click", function() {
             if(sortedByPoints){
                 ascSortByName(globalTest);

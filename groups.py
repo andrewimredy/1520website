@@ -90,7 +90,6 @@ def get_members_of_group(group_name):
     group_members = list(query.fetch())   #retrieves and puts entities in a list 
     if not group_members:
         print("empty list")
-        #need to handle this
         return 
     else:
         return group_members
@@ -103,7 +102,9 @@ def get_data_of_members(group_name):
         query = datastore_client.query(kind="userCreds")
         query.add_filter("username", "=", members["username"])        
         newMem = list(query.fetch())   #retrieves and puts entities in a list
-        members_list.append(newMem[0])        
+        #print(newMem)
+        members_list.append(newMem[0])
+    print(members_list)        
     return members_list
 
 
@@ -115,3 +116,12 @@ def get_groups_user_is_in(username):
     for name in groups:
         groupNames.append(name["group_name"])
     return groupNames
+
+def get_all_users():
+    query = datastore_client.query(kind="userCreds")
+    members = list(query.fetch())   #retrieves and puts entities in a list 
+    if not members:
+        print("empty list")
+        return 
+    else:
+        return members

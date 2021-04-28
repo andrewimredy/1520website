@@ -3,7 +3,7 @@ from flask import Flask, render_template, session, request, redirect
 from google.cloud import datastore
 from auth import blue as auth_blueprint, get_user
 from user import userStore, generate_creds, hash_password
-from groups import GroupInfo, create_group, join_group, get_data_of_members, get_groups_user_is_in
+from groups import GroupInfo, create_group, join_group, get_data_of_members, get_groups_user_is_in, get_all_users
 
 app = Flask(__name__)
 app.secret_key = b"7131791ae45df500d74730c2c04f16439140977bff6cf792157a6c4e55b7"
@@ -88,15 +88,11 @@ def groups_view():
     if not user:
         return redirect("/auth/login")
     groupNames = get_groups_user_is_in(user) #returns a list
-    if not groupNames: #empty
-        print("Not a member of a group")
-    else: #not empty
-        for group in groupNames:
-            groups.append(get_data_of_members(group))
-        listForJavascript = convertToList(groups)
-        #print(listForJavascript)
-        #data = 
-        #test = gql_json_parser(groups)
+    groups.append(get_all_users())   
+    for group in groupNames:
+        groups.append(get_data_of_members(group))
+    groupNames.insert(0, "Global LeaderBoard")
+    listForJavascript = convertToList(groups)
     return render_template("groups.html", groups=groups, user=user, groupNames = groupNames, listForJavascript = listForJavascript, numberOfGroups = len(groupNames))
 
 def convertToList(groups):
@@ -110,13 +106,6 @@ def convertToList(groups):
             newMember.append(member['points'])
             newGroup.append(newMember)
     return newGroups
-
-
-def gql_json_parser(query_obj):
-    result = []
-    for entry in query_obj:
-        result.append(dict([(p, unicode(getattr(entry, p))) for p in entry.properties()]))
-    return result
 
 @app.route('/groups/create_group', methods=["GET"])
 def create_group_view():
