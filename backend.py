@@ -55,4 +55,3 @@ def update_bets():
         else:
             bet.update({'result': 'loss'.decode('utf-8')})
         datastore_client.put(bet)
-        datastore_client.put(user)

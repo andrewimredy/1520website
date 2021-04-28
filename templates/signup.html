@@ -1,42 +1,34 @@
+<style>
+    #signup-form{
+        display: grid;
+        justify-items: center;
+        align-items: center;
+        margin-top: 15px;
+    }
+    #signup-form-field{
+        margin-bottom: 10px;
+        border-radius: 2px;
+        padding: 0px 0px 5px 5px;
+    }
+    p{
+        color: white;
+        text-align: center;
+        border: 5px red;
+        background-color: red;
+    }
+</style>
+
 {% extends "_base.html" %}
-{% block title %}Login{% endblock %}
+{% block title %}Signup{% endblock %}
 
 {% block content %}
-<div class="centered">
-    <form action="/auth/signup" method="POST" enctype="multipart/form-data">
-    <p>
-      <label>Username</label>
-      <input type="text" name="username">
-    </p>
-    <p>
-      <label>Password</label>
-      <input type="password" name="password">
-    </p>
-    <p>
-      <label>Confirm Password</label>
-      <input type="password" name="confirm-password">
-    </p>
-
+{% if error is not none %}
+<p>{{error}}</p>
+{% endif %}
+<form action="/auth/signup" method="POST" enctype="multipart/form-data" id="signup-form">
+    <input type="text" name="username" placeholder="Username" id="signup-form-field">
+    <input type="password" name="password" placeholder="Password" id="signup-form-field">
+    <input type="password" name="confirm-password" placeholder="Confirm Password" id="signup-form-field">
     <button type="submit">Sign Up</button>
-  </form>
-</div>
-
-<script>
-    var username = document.getElementById("username");
-    var password = document.getElementById("password");
-    var confirm_password = document.getElementById("confirm-password");
-
-    function validPass(){
-        if(password.value != confirm_password.value){
-            console.log(password.value);
-            console.log(confirm_password.value);
-            console.log(password.value != confirm_password.value);
-            confirm_password.setCustomValidity("Passwords Don't Match");
-            confirm_password.reportValidity();
-        }else if(password.value.trim() == ""){
-            password.setCustomValidity("Passwords must not be empty");
-            password.reportValidity();
-        }
-    }
-</script>
+</form>
 {% endblock %}

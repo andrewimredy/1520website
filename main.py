@@ -50,6 +50,14 @@ def get_game_info():
         newlist.append([get_full_name(i[0]), get_full_name(i[1]), i[2]])
     ### newlist contains all teams playing. ([0][0][gameId] vs [0][1], [1][0] vs [1][1])
 
+
+def get_bets_for_user(user):
+    #get unfinished bets for the user
+    query = datastore_client.query(kind='bet')
+    query.add_filter("user" , "=" , user)
+    bets = list(query.add_filter('result', '=', 'none').fetch())
+    return bets
+
 ##atomatic updating:
 scheduler = BackgroundScheduler()
 scheduler.add_job(func=backend.update_games, trigger='interval', seconds=600)
@@ -83,9 +91,18 @@ def profile_view():
 @app.route('/myStats')
 def stats_view():
     user = get_user()
+    groups = list()
+    games = list()
     if user:
-        points = get_points(user)    
-        return render_template("myStats.html" , user=user , points=points)
+        points = get_points(user)
+        groupNames = get_groups_user_is_in(user)
+        bets = get_bets_for_user(user)        
+        for group in groupNames:
+            groups.append(get_data_of_members(group))
+        for bet in bets:
+            game_curr = datastore_client.get(datastore_client.key('game', bet['game']))
+            games.append(game_curr)
+        return render_template("myStats.html" , user=user , points=points , groups=groups , groupNames=groupNames , bets=bets , games=games)
     return render_template("myStats.html" , user=user)
 
 def get_points(userStr):
