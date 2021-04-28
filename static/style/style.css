@@ -136,7 +136,7 @@ body {
 	height: auto;
 }
 
-.row {
+[class^="row"] {
 	position: relative;
 	display: block;
 	width: 100%;
@@ -145,7 +145,7 @@ body {
     background-color: #D3D6D9;
 }
 
-.row_header {
+#row_header {
 	position: relative;
 	display: block;
 	width: 100%;
@@ -153,32 +153,37 @@ body {
     font-weight: bold; 
     border-bottom: 1px solid #F41915;       
 }
-.name {
+[class^="name"] {
 	position: relative;
 	display: inline-block;
 	width: 75%;
 	line-height: 45px;
 }
 
-.name_header {
+#name_header {
 	position: relative;
-	display: inline-block;
-	width: 75%;
-	line-height: 45px;
+    display: inline-block;
+    width: auto;
+    line-height: 45px;
+    cursor: pointer;
+    padding: 0px;
+    margin-right: 20%;
 }
 
-.score {
+[class^="score"] {
 	position: relative;
 	display: inline-block;
 	width: 25%;
 }
 
-.score_header {
-	position: relative;
-	display: inline-block;
-	width: 25%;
+#score_header {
+	pposition: relative;
+    display: inline-block;
+    width: auto;
+    cursor: pointer;
+    margin-left: 48%;
 }
-.group_name{
+[class^="group_name"]{
     justify-content: center;
     margin: auto;
     padding-top: 50px;
@@ -187,3 +192,4 @@ body {
     font-size: 24px;
     font-weight: bold;
     }
+
