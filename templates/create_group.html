@@ -2,22 +2,23 @@
 {% block title %}PittBett Create Group{% endblock %}
 
 {% block content %}
-<div class="centered">
+<div class="centeredGroup">
+    <h1>Create Group</h1>
     <form action="/groups/create_group" method="POST" enctype="multipart/form-data">
     <p>
-      <label>Group Name</label>
+      <label>Group Name:</label>
       <input type="text" name="group_name" required>
     </p>
     <p>
-      <label>Max Group Size</label>
+      <label>Max Group Size:</label>
       <input type="number" name="max_size" required>
     </p>
     <p>
-      <label>Password(optional)</label>
+      <label>Password<i>(optional)</i>:</label>
       <input type="password" name="password">
     </p>
 
-    <button type="submit">Create Group</button>
+    <button class="JoinCreateButton" type="submit">Create Group</button>
   </form>
 </div>
 {% endblock %}
