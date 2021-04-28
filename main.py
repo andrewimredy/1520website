@@ -46,7 +46,7 @@ def get_game_info():
         timelist.append(json2['games'][game]['startTimeEastern'])
     for i in teamlist:
         newlist.append([get_full_name(i[0]), get_full_name(i[1]), i[2]])
-    ### newlist contains all teams playing. ([0][0] vs [0][1], [1][0] vs [1][1])
+    ### newlist contains all teams playing. ([0][0][gameId] vs [0][1], [1][0] vs [1][1])
 
 
 
@@ -67,7 +67,7 @@ def place_bet(game, team):
     bet_entity['team'] = team #home or away
     bet_entity['user'] = get_user()
     bet_entity['game'] = game
-    bet_entity['result'] = 'none'.decode('utf-8')
+    bet_entity['result'] = 'none'
     datastore_client.put(bet_entity)
     return redirect('/')
    
