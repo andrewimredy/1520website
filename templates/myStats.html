@@ -34,7 +34,7 @@
         <span id="showMoreGroup">
             <br>
             {% for group in groups %}
-                {{ groupNames[loop.index0] }}
+                &emsp;&emsp;&emsp;{{ groupNames[loop.index0] }}
                 <br>
             {% endfor %}
         </span>
@@ -45,7 +45,7 @@
         <span id="showMoreBet">
             <br>
             {% for bet in bets %}
-                {{ games[loop.index0]["visitor_team"] }} vs {{ games[loop.index0]["home_team"]}}
+                &emsp;&emsp;&emsp;{{ games[loop.index0]["visitor_team"] }} vs {{ games[loop.index0]["home_team"]}}
                 <br>
             {% endfor %}
         </span>
