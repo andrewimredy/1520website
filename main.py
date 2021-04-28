@@ -49,6 +49,12 @@ def get_game_info():
     ### newlist contains all teams playing. ([0][0] vs [0][1], [1][0] vs [1][1])
 
 
+def get_bets_for_user(user):
+    #get unfinished bets for the user
+    query = datastore_client.query(kind='bet')
+    query.add_filter("user" , "=" , user)
+    bets = list(query.add_filter('result', '=', 'none').fetch())
+    return bets
 
 @app.route('/')
 def main_page():
@@ -81,12 +87,17 @@ def profile_view():
 def stats_view():
     user = get_user()
     groups = list()
+    games = list()
     if user:
         points = get_points(user)
         groupNames = get_groups_user_is_in(user)
+        bets = get_bets_for_user(user)        
         for group in groupNames:
             groups.append(get_data_of_members(group))
-        return render_template("myStats.html" , user=user , points=points , groups=groups , groupNames=groupNames)
+        for bet in bets:
+            game_curr = datastore_client.get(datastore_client.key('game', bet['game']))
+            games.append(game_curr)
+        return render_template("myStats.html" , user=user , points=points , groups=groups , groupNames=groupNames , bets=bets , games=games)
     return render_template("myStats.html" , user=user)
 
 def get_points(userStr):
