@@ -117,10 +117,10 @@ def groups_view():
     if not user:
         return redirect("/auth/login")
     groupNames = get_groups_user_is_in(user) #returns a list
-    groups.append(get_all_users())   
     for group in groupNames:
         groups.append(get_data_of_members(group))
     groupNames.insert(0, "Global LeaderBoard")
+    groups.insert(0, get_all_users())   
     listForJavascript = convertToList(groups)
     return render_template("groups.html", groups=groups, user=user, groupNames = groupNames, listForJavascript = listForJavascript, numberOfGroups = len(groupNames))
 
