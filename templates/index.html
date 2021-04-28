@@ -5,7 +5,7 @@
       {% block content %}
     <h1 class=main_title>Welcome to PittBett</h1>
     <h2 class=games_title>Today's Games: {{ newlist |length }}</h2> 
-    <ul class="games">
+    <ul class="games" onload="showPrevBets()">
         {% for game in newlist %}
         <li class="game_block">
             <div class="team_and_button_A" id="a{{ game.2 }}">

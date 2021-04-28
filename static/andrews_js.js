@@ -1,4 +1,3 @@
-
 function placeBet(teamAndGame){   
     //gameId comes in as 'x000000000' to show bet pref and id. lets parse it
     let team = teamAndGame[0];
@@ -16,9 +15,8 @@ function placeBet(teamAndGame){
     var req = new XMLHttpRequest();
     req.open('POST', '/bet' + '/' + gameId + '/' + team);
     req.send();
-  
     //put record into local storage (for refresh guard...)
-
+    localStorage.setItem(gameId, team);
     return;
 }
 
@@ -37,7 +35,16 @@ function changeBetBox(gameId, team){
     return;
 }
 
-//changes bet box for 
-function showPrevBets(){
-
+//changes bet box for bets already placed..
+window.onload = function showPrevBets(){
+    let gameBlocks = document.getElementsByClassName('game_block');
+    for (i = 0; i < gameBlocks.length; i++){
+        let id = gameBlocks[i].getElementsByClassName('game_time')[0].getElementsByClassName('game_block_time')[0].id
+        id = id.substring(1)
+        let betTeam = localStorage.getItem(id);
+        if(betTeam){
+            changeBetBox(id, betTeam);
+        }        
+    }   
+    return; 
 }

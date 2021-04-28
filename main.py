@@ -1,9 +1,11 @@
 #!/usr/bin/python3
-from flask import Flask, render_template, session, request, redirect
+from flask import Flask, render_template, session, request, redirect, jsonify
 from google.cloud import datastore
 from auth import blue as auth_blueprint, get_user
 from user import userStore, generate_creds, hash_password
 from groups import GroupInfo, create_group, join_group, get_data_of_members, get_groups_user_is_in, get_all_users
+import time, atexit
+from apscheduler.schedulers.background import BackgroundScheduler
 
 app = Flask(__name__)
 app.secret_key = b"7131791ae45df500d74730c2c04f16439140977bff6cf792157a6c4e55b7"
@@ -48,7 +50,10 @@ def get_game_info():
         newlist.append([get_full_name(i[0]), get_full_name(i[1]), i[2]])
     ### newlist contains all teams playing. ([0][0][gameId] vs [0][1], [1][0] vs [1][1])
 
-
+##atomatic updating:
+scheduler = BackgroundScheduler()
+scheduler.add_job(func=backend.update_games, trigger='interval', seconds=600)
+scheduler.add_job(func=backend.update_bets, trigger='interval', seconds=600)
 
 @app.route('/')
 def main_page():
@@ -67,7 +72,7 @@ def place_bet(game, team):
     bet_entity['game'] = game
     bet_entity['result'] = 'none'
     datastore_client.put(bet_entity)
-    return 200
+    return jsonify(success=True)
    
 
 
