@@ -40,18 +40,18 @@ def update_bets():
     query = datastore_client.query(kind='bet')
     result = query.add_filter('result', '=', 'none').fetch()
     for bet in result:
-        print(bet['game'])
+        #print(bet['game'])
         #find corresponding game
         game = datastore_client.get(datastore_client.key('game', bet['game']))
-        print(game['status'])
+        #print(game['status'])
         if game['status'] != 'done': break        
         #find corresp. user
         user = datastore_client.get(datastore_client.key('userCreds', bet['user']))
-        print(user)
+        #print(user)
         if game['winner'] == bet['team']: #if bet wins, add 100pts to user
-            bet.update({'result': 'win'.decode('utf-8')})
+            bet.update({'result': 'win'})
             oldpoints = user['points']
             user.update({'points': (oldpoints +100)})
         else:
-            bet.update({'result': 'loss'.decode('utf-8')})
+            bet.update({'result': 'loss'})
         datastore_client.put(bet)

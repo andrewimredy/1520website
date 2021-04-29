@@ -2,7 +2,6 @@ function placeBet(teamAndGame){
     //gameId comes in as 'x000000000' to show bet pref and id. lets parse it
     let team = teamAndGame[0];
     let gameId = teamAndGame.substring(1);
-
     //if no user is logged in, alert
     let usernameBox =  document.getElementById('username')
     if(usernameBox  === null){
@@ -38,7 +37,7 @@ function changeBetBox(gameId, team){
 //changes bet box for bets already placed..
 window.onload = function showPrevBets(){
     let gameBlocks = document.getElementsByClassName('game_block');
-    if(document.getElementById('username')){    
+    if(document.getElementById('username') != null){    
         for (i = 0; i < gameBlocks.length; i++){
             let id = gameBlocks[i].getElementsByClassName('game_time')[0].getElementsByClassName('game_block_time')[0].id
             id = id.substring(1)
