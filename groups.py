@@ -49,10 +49,11 @@ def join_group(group_name, username, password):
         print("Got password")         
         if (groups[0]["max_size"] > groups[0]["group_size"]):
             members = get_members_of_group(group_name)
-            for member in members:
-                if member["username"] == username:
-                    inGroup = True
-                    break 
+            if members: #list is not empty
+                for member in members:
+                    if member["username"] == username:
+                        inGroup = True
+                        break 
             if(not inGroup):
                 print("Good group size")
                 # The Cloud Datastore key for the new entity
