@@ -62,9 +62,13 @@ def get_bets_for_user(user):
 scheduler = BackgroundScheduler()
 scheduler.add_job(func=backend.update_games, trigger='interval', seconds=600)
 scheduler.add_job(func=backend.update_bets, trigger='interval', seconds=600)
+scheduler.start()
+# Shut down the scheduler when exiting the app
+atexit.register(lambda: scheduler.shutdown())
 
 @app.route('/')
 def main_page():
+    scheduler.start()
     user = get_user()
     get_game_info()
     return render_template("index.html", newlist=newlist, numgames=numgames,  timelist=timelist, user=user)
@@ -75,7 +79,11 @@ def place_bet(game, team):
         return redirect('/auth/login')
     entity_key = datastore_client.key('bet', get_user() + game)
     bet_entity = datastore.Entity(key=entity_key)
-    bet_entity['team'] = team #home or visitor
+    if(team == 'v'):
+        teamFull = 'visitor'
+    elif(team == 'h'):
+        teamFull = 'home'
+    bet_entity['team'] = teamFull #home or visitor
     bet_entity['user'] = get_user()
     bet_entity['game'] = game
     bet_entity['result'] = 'none'
